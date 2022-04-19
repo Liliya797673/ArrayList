@@ -1,0 +1,70 @@
+package Lists;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
+import java.util.stream.Collectors;
+
+public class CardsGame {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // прочитане на картите на двамата играча -> Integer List firstPlayerCards и secondPlayerCards
+        //20 30 40 50
+        List<Integer> firstPlayerCards = Arrays
+                .stream(scanner.nextLine().split(" "))
+                .map(Integer::parseInt)
+                .collect(Collectors.toList());
+        // 10 20 30 40
+        List<Integer> secondPlayerCards = Arrays
+                .stream(scanner.nextLine().split(" "))
+                .map(Integer::parseInt)
+                .collect(Collectors.toList());
+        // представям си игра, която се върти докато ->
+        // The game is over when one of the decks is left without any cards.
+        while (firstPlayerCards.size() != 0 && secondPlayerCards.size() != 0) {
+            // докато това условие е вярно, сравнявай карти и:
+            // как разбирам кой от двамата играча има по-силни карти - сравнявам 1 по 1!
+            // винаги започваме от най-лявата карта и сравняваме двете карти.
+            // играчът от масива с по-голямата карта, взима и двете карти и ги добавя в тестето си в определен ред ->
+            // първо накрая на листа добавя свояте печеливша,
+            // а после на последно място на листа, взетата от играча с втория лист
+            // преди да мога да ги добавя обаче първо трябва да ги махна от firstPlayerCards и secondPlayerCards
+
+            // запазвам в int първата карта от първия лист (firstPlayerCards)
+            // и първата карта от втория масив secondPlayerCards,
+            // за да мога после с remove да ги премахна от началото на листа
+            int firstPlayerCard = firstPlayerCards.get(0);
+            int secondPlayerCard = secondPlayerCards.get(0);
+            firstPlayerCards.remove(0);
+            secondPlayerCards.remove(0);
+            // тук питам if firstPlayerCard > secondPlayerCard
+            // -> картата на първия става предпоследна, а втория -> последна
+            if (firstPlayerCard > secondPlayerCard) {
+                firstPlayerCards.add(firstPlayerCard);
+                firstPlayerCards.add(secondPlayerCard);
+            } else if (secondPlayerCard > firstPlayerCard) {
+                secondPlayerCards.add(secondPlayerCard);
+                secondPlayerCards.add(firstPlayerCard);
+            } // ако картите са равни ги премахваме, но не ги добавяме
+
+        }
+        // ако на първия му свършат картите
+        if (firstPlayerCards.size()==0){
+            // вторият печели и ни трябва сумата, за която имаме метод getCardsSum
+            // - дай ми сумата за картите на втория
+            System.out.printf("Second player wins! Sum: %d",getCardsSum (secondPlayerCards));
+        } else if(secondPlayerCards.size()==0){
+            System.out.printf("First player wins! Sum: %d", getCardsSum (firstPlayerCards));
+        }
+
+    }
+
+    public static  int getCardsSum (List<Integer> listCards){
+        int sum = 0;
+        for (int cards:listCards) {
+        sum+=cards;
+        }
+        return sum;
+    }
+}
