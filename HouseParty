@@ -1,0 +1,44 @@
+package Lists;
+
+import java.util.*;
+import java.util.stream.Collectors;
+
+public class HouseParty {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        int commandNumber = Integer.parseInt(scanner.nextLine());
+        // тук ще пазя списъка с хората след подадените команди в цикъла
+        List<String> guestNames = new ArrayList<>();
+        // On the next lines you are going to receive some of the following inputs:
+        //•	"{name} is going!" -> проверявам дали {name} е в листа -> ако е правя нещо, ако не е правя нещо
+        //•	"{name} is not going!"-> проверявам дали {name} е в листа -> ако е правя нещо, ако не е правя нещо
+
+        for (int command = 1; command <= commandNumber; command++) ;
+
+        String command = scanner.nextLine();
+        List<String> commandParts = Arrays.stream(command.split(" ")).collect(Collectors.toList());
+
+        String name = commandParts.get(0);
+        if (commandParts.size() == 3) {
+            if (guestNames.contains(name)) {
+                System.out.printf("%s is already in the list!%n", name);
+
+            } else {
+                guestNames.add(name);
+            }
+
+        }
+        else if (commandParts.size() == 4) {
+
+            if (guestNames.contains(name)) {
+                guestNames.remove(name);
+
+            } else {
+                System.out.printf("%s is not in the list!%n", name);
+            }
+
+        }
+        System.out.println(guestNames.toString().replaceAll("[\\[\\],]", ""));
+    }
+}
