@@ -1,0 +1,56 @@
+package Lists;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
+import java.util.stream.Collectors;
+
+public class ChangeList {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        //Write a program, which reads a list of integers
+        // from the console and receives commands, which manipulate the list.
+        // прочитам си Integer list от конзолата = 1 2 3 4 5 5 5 6
+        //1 2 3 4 5 5 5 6
+        //Delete 5
+        //Insert 10 1
+        //Delete 5
+        //end
+
+        List<Integer> numList = Arrays
+                .stream(scanner.nextLine().split(" "))
+                .map(Integer::parseInt)
+                .collect(Collectors.toList());
+
+        String inputCommand = scanner.nextLine();
+
+        while (!inputCommand.equals("end")) {
+            // отново командата се състои от 2 елемента, които имат значение -> Delete (commandName) 5 (element)
+            String commandName = inputCommand.split(" ")[0];
+            // казвам командата commandName ми я сплитни по интервали и ми дай интервала на [0] позиция
+            // -> "Delete 5" получавам "Delete" "5" и взимам "Delete"
+            int element = Integer.parseInt(inputCommand.split(" ")[1]);
+            // сега ми запази елемента на [1]позиция в int element
+
+            // имам две опции за commandName -> Delete Insert и двете имат element
+            if (commandName.equals("Delete")) {
+                numList.removeAll(Arrays.asList(element));
+                // за removeAll мога да подам в скобите само Колекция, затова използвам функционалността
+                // казвам за моя списък numList ми махни всички елементи = 5 в първия случай
+            } else if (commandName.equals("Insert")) {
+                // позицията я чета само в elsa-а, защото се отнася само за Insert
+                int position = Integer.parseInt(inputCommand.split(" ")[2]);
+                numList.add(position, element);
+            }
+            inputCommand = scanner.nextLine();
+
+            // Принтиране с foreach
+
+        }
+        for (int number : numList) {
+            System.out.print(number + " ");
+        }
+    }
+}
+
