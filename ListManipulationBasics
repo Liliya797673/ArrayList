@@ -1,0 +1,68 @@
+package Lists;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
+import java.util.stream.Collectors;
+
+public class ListManipulationBasics {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        //Write a program that reads a list of integers. Then until you receive "end", you will be given different commands:
+        //Add {number}: add a number to the end of the list
+        //Remove {number}: remove a number from the list
+        //RemoveAt {index}: remove a number at a given index
+        //Insert {number} {index}: insert a number at a given index
+        //Note: All the indices will be valid!
+        //When you receive the "end" command print the final state of the list (separated by spaces).
+        // 1. трябва да си прочетем лист с цели числа
+        List<Integer> numList = Arrays
+                .stream(scanner.nextLine().split(" "))
+                .map(Integer::parseInt)
+                .collect(Collectors.toList());
+        // 2. до получаване на командата "end" четем команди
+        String input = scanner.nextLine();
+        while (!input.equals("end")) {
+            // При различните команди Add Remove RemoveAt имаме различен на брой чосла
+            // създавам String List, чиито елементи ще са всички елементи, които ми трябват -> " Add 3 " "Remove 2"
+            List<String> commandList = Arrays.stream(input.split(" "))
+                    .collect(Collectors.toList());
+            String command = commandList.get(0);
+            // на първо завъртане взимам си командата на 0 индекс -> Remove RemoveAt Insert
+            // и сега по тази команда switch-вам и при различните условия ще добавям или махам елементи от листа
+            switch (command) {
+                case "Add":
+                    int numToAdd = Integer.parseInt(commandList.get(1));
+                    // изпълнение на съответните команди - ако е Add -> numToAdd отива на последна позиция
+                    numList.add(numToAdd);
+                    break;
+                case "Remove":
+                    int numRemove = Integer.parseInt(commandList.get(1));
+                    numList.remove(Integer.valueOf(numRemove));
+                    break;
+                case "RemoveAt":
+                    int numIndexRemove = Integer.parseInt(commandList.get(1));
+                    numList.remove(numIndexRemove);
+                    break;
+                case "Insert":
+                    int numInsert = Integer.parseInt(commandList.get(1));
+                    int indexInsert = Integer.parseInt(commandList.get(2));
+                    numList.add(indexInsert, (numInsert));
+                    break;
+            }
+
+            input = scanner.nextLine();
+        }
+        System.out.println(numList.toString().replaceAll("[\\[\\],]", ""));
+    }
+}
+//4 19 2 53 6 43
+//Add 3
+// commandList:
+// позиции
+//  0         1       2
+// Remove     2
+// RemoveAt   1
+// Insert     8       3
+//end
