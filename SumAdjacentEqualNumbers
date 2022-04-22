@@ -1,0 +1,61 @@
+package Lists;
+
+import java.text.DecimalFormat;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
+import java.util.stream.Collectors;
+
+public class SumAdjacentEqualNumbers {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        // 3 3 6 1 - > програма, която сумира всички еднакви съседни елементи;
+        // започваме от ляво надясно и след като са сумирани
+        // 2 числа да се проввери дали полученото не е еднакво на съседното
+        // 3 + 3 = 6 -> 661 -> 6 + 6 = 12 -> 12 1
+        // 1. прочитам лист от числа, но Double
+
+        List<Double> numList = Arrays
+                .stream(scanner.nextLine().split(" "))
+                .map(Double::parseDouble)
+                .collect(Collectors.toList());
+
+        // 2. обхождане на листа - > for, защото ще променям и сумирам
+        for (int i = 0; i < numList.size() - 1; i++) {
+
+            // как ще проверя дали 3 и 3 са еднакви 6 и 6 са еднакви и т.н
+            // 3 3 6 1  - > елементът на index 0 с index 0 + 1 -> две съседни еднакви позиции
+            if (numList.get((i)).equals(numList.get(i + 1))) {
+                // за първата итерация питам: ако на първа итерация вземи ми index-a
+                // на позиция 0 и сравни дали е равен на i+1 от Double листа - > numList
+                // ако проверката даде true, ние трябва да сумираме елементите на i + i+1
+                // запази сумата на първата позиция - > 0 и изтрий елементът, който е бил на първа позиция
+                numList.set(i, numList.get(i) + numList.get(i + 1));
+                // "сетваме елемента" като използваме .set, за да риплейснем елемента, влязъл в сумата
+                // и събираме директно стойностите на елементите на позиция i + i+1
+                // на позиция i ми добави сумата от i + i+1 (set)
+                numList.remove(i + 1);
+                // след като сме сетнали новата стойност на 0 позиция, искаме да премахнем стойността от i+1
+
+                i = -1;
+                // след като премахна стойността и задам нова стойност
+                // на 0 позиция искам i да стане 0 и да започне да проверява отначало
+            }
+
+        }
+        System.out.println(joinElementsByDelimiter(numList, " "));
+    }
+        // форматиране на десетични числа
+    public static String joinElementsByDelimiter(List<Double> list, String delimiter) {
+        String output = "";
+        for (Double item: list) {
+
+            DecimalFormat df = new DecimalFormat("0.#");
+            String numDf = df.format(item) + delimiter;
+            output  += numDf;
+        }
+        return output;
+    }
+}
+
+
