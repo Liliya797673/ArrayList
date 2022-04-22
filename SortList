@@ -1,0 +1,17 @@
+package Lists;
+
+import java.util.*;
+
+public class Sort {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+
+        List<String> names = new ArrayList<>(Arrays.asList("Spaska", "Ana", "Maria","Olga", "Silva"));
+
+        Collections.sort(names);
+        Collections.reverse(names);
+
+        System.out.println(String.join(" ", names));
+    }
+}
