@@ -1,0 +1,66 @@
+package Lists;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
+import java.util.stream.Collectors;
+
+public class MergingLists {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        //3 5 2 43 12 3 54 10 23            -> 3 (1 лист) 76 (втори лист) 5 (първи лист) 5 (втори лист)
+                                          // 2 34 43 2 12 4 3 12 / край на по-краткият лист, а останалите ги апендваме 54 10 23
+
+        //76 5 34 2 4 12
+        // 1. създаване на два нови листа от Integer
+
+        List<Integer> numListFirstLine = Arrays
+                .stream(scanner.nextLine().split(" "))
+                .map(Integer::parseInt)
+                .collect(Collectors.toList());
+        List<Integer> numListSecondLine = Arrays
+                .stream(scanner.nextLine().split(" "))
+                .map(Integer::parseInt)
+                .collect(Collectors.toList());
+
+        // 2. създавам и result list, в който ще пазя елементите от numListFirstLine и numListSecondLine
+        // той в момента е празен
+        List <Integer> resultList = new ArrayList<>();
+        // тъй като трябва да минавам по двата листа и да взимам първото число -> слагам го в resultList, вторият лист първото число -> result list
+        // дължините на листите, които четем обаче е различна.
+        // тръгвам по късия, защото ако тръгна по дългия и се опитам да достъпя елемент, който втория няма, ще ми даде грешка
+
+        int minSize = Math.min(numListFirstLine.size(), numListSecondLine.size());
+        // 1. ще вземем по-малкото число от размерите на двата листа, които сравняваме
+        for (int index = 0; index <minSize; index ++){
+            // 2. сега вече итерирам по minSize и ще взимам елементите -> index
+
+            int firstItem = numListFirstLine.get((index));
+            int secondItem = numListSecondLine.get((index));
+            // 3. сега имам елементите и ги добавям
+            resultList.add(firstItem);
+            resultList.add(secondItem);
+
+            // 4. след като сме добавили елементите от двата листа
+            // до последния елемент от размера на по-късия, сега трябва да взема оставащите елементи от по-дългия
+
+            // -> първо да разберем кой е по-големият лист
+            // {и от него да взема елементите, които да апендна чрез sublist}
+
+            if (numListFirstLine.size() > numListSecondLine.size()){
+                resultList.addAll(numListFirstLine.subList(minSize, numListFirstLine.size()));
+                //sublist minSize-> краят на по-късия, numListFirstLine.size() - последния
+            }else {
+                resultList.addAll(numListSecondLine.subList(minSize, numListSecondLine.size()));
+            }
+
+            // и можем да си направим подлист от един индекс (последният индекс от малкия лист) до края
+            // subList -> last element of minSize -> last element of maxSize
+
+
+        }
+        System.out.println(resultList.toString().replaceAll("[\\[\\],]", ""));
+    }
+}
