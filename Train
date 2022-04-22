@@ -1,0 +1,48 @@
+package Lists;
+
+import java.util.*;
+import java.util.stream.Collectors;
+
+public class Train {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // list of wagons int
+        //). Each integer represents the number of passengers that are currently in each wagon.
+        // On the next line, you will get the max capacity of each wagon (single integer).
+        // Until you receive "end" you will be given two types of input:
+        //•	Add {passengers} - add a wagon to the end with the given number of passengers
+        //•	{passengers} -  find an existing wagon to fit all the passengers (starting from the first wagon)
+        //At the end print the final state of the train (all the wagons separated by a space)
+
+        List<Integer> wagonsList = Arrays
+                .stream(scanner.nextLine().split(" "))
+                .map(Integer::parseInt)
+                .collect(Collectors.toList());
+          // {32 54 21 12 4 0 23} - number passengers that are currently in each wagon
+        int maxCapacity = Integer.parseInt(scanner.nextLine());
+            // 75 -> max capacity
+        String input = scanner.nextLine();
+        int sumPeople = 0;
+            // Add 10
+            // Add 0
+        while (!input.equals("end")){
+            // ако не е "end",
+            // командата ще е "Add {passengers}" .split -> "Add" и "{passengers}"
+
+            if (input.length()==2){
+                String commandParts = input.split(" ")[0];
+                int index = Integer.parseInt(input.split(" ")[1]);
+                wagonsList.add(index);
+            }else {
+                int numberPeople = Integer. parseInt(scanner.nextLine());
+                sumPeople+=numberPeople;
+            }
+            // проверка дали команда Add или int
+            input = scanner.nextLine();
+
+        }
+            System.out.println();
+    }
+
+}
