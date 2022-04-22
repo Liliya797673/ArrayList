@@ -1,0 +1,58 @@
+package Lists;
+
+import java.sql.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
+import java.util.stream.Collectors;
+
+public class Party {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // keeps track of the guests going to a party
+
+        int n = Integer.parseInt(scanner.nextLine());
+        List<String> nameList = new ArrayList<>();
+        // n колко команди ще получа
+
+        // "{name} is going!"
+        // "{name} is not going!"
+
+        // ако command == 3 символа -> {name} е вече в списъка ->
+        // : принтирам "{name} is already in the list!"
+        // {name} не е в списъка => добавям го в списъка, който в началото е празен!
+        // ако command == 4 символа -> {name} -> в списъка ли е?
+        // -> ако не -> принтирам = "{name} is not in the list!"
+        // ако command == 4 символа -> {name} -> в списъка ли е? -> ако да -> remove {name}
+
+        for (int row = 1; row <= n; row++) {
+            // имам толкова редове за четене, 1-> n и на всяко завъртане мога да получа команда
+            // "{name} is going!"
+            String input = scanner.nextLine();
+            List<String> commandList = Arrays.stream(input.split(" "))
+                    .collect(Collectors.toList());
+            String name = commandList.get(0);
+
+            if (commandList.size() == 3) {
+                // ако command == 3 символа -> проверка дали {name} е вече в списъка ->
+                if (nameList.contains(name)) {
+                    System.out.printf("%s is already in the list!%n", name);
+                } else if (!nameList.contains(name)){
+                    nameList.add(name);
+                }
+
+            } else if (commandList.size() == 4) {
+                if (nameList.contains(name)) {
+                    nameList.remove(name);
+                } else {
+                    System.out.printf("%s is not in the list!%n", name);
+                }
+            }
+        }
+        for (String elements:nameList) {
+            System.out.println(elements);
+        }
+    }
+}
