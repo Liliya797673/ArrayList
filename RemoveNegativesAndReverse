@@ -1,0 +1,36 @@
+package Lists;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Scanner;
+import java.util.stream.Collectors;
+
+public class RemoveNegativesAndReverse {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        // Read a list of integers, remove all negative numbers from it
+        // and print the remaining elements in reversed order.
+        // In case of no elements left in the list, print "empty".
+        // -1 -2 -3	         -> empty
+        //четем си лист Integer поделен по празно място
+        List<Integer> numList = Arrays
+                .stream(scanner.nextLine().split(" "))
+                .map(Integer::parseInt)
+                .collect(Collectors.toList());
+
+        // условие да провери дали има в листа отрицателни числа и да ги премахне:
+
+        numList.removeIf(number -> number<0);
+        Collections.reverse(numList);
+        // казвам removeIf всяко число, което същото число е по-малко от 0
+
+        // Остава принтиране като ако няма нечетни елементи да принтира "empty"
+
+        if (numList.isEmpty()){
+            System.out.println("empty");
+        }else {
+            System.out.println(numList.toString().replaceAll("[\\[\\],]", ""));
+        }
+    }
+}
