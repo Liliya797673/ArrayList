@@ -1,0 +1,39 @@
+package Lists;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Scanner;
+
+public class ListOfProducts {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        // Read a number n and n lines of products. Print a numbered list of all the products ordered by name.
+        //4
+        //Potatoes -> 1.Apples
+        //Tomatoes -> 2.Onions
+        //Onions -> 3.Potatoes
+        //Apples -> 4.Tomatoes
+        //
+        // 1. прочитам n, което е броят на продуктите
+
+        int n = Integer. parseInt(scanner.nextLine());
+        // 2. лист, в който ще пазя всички продукти, които след това ще прочета във for
+        List <String> listOfProduct = new ArrayList<>();
+
+        for (int product = 0; product < n ; product ++){
+            String currentProduct = scanner.nextLine();
+            // след прочитането на всеки следващ продукт, го добавям към listOfProduct
+            listOfProduct.add(currentProduct);
+        }
+        Collections.sort(listOfProduct);
+        // сортираме колекцията в случая Листа със Стрингове
+
+        // трябва да ги принтирам номерирани отпред
+
+        for (int i = 0; i <n ; i ++){
+            System.out.printf("%d.%s%n", i+1, listOfProduct.get(i));
+
+        }
+    }
+}
